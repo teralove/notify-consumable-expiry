@@ -1,8 +1,5 @@
-const Command = require('command');
-
 module.exports = function NotifyConsumableExpiry(dispatch) {
-	const command = Command(dispatch);
-    
+
     const Consumables = {
         4830: 'Bravery', // Normal
         4833: 'Bravery', // Strong
@@ -14,16 +11,8 @@ module.exports = function NotifyConsumableExpiry(dispatch) {
         922:  'Noctenium', // Superior
     };
     
-    let enabled = true,
-        gameId = undefined,
+    let gameId = undefined,
         activeConsumables = [];
-
-    command.add('consumables', (arg1) => {
-        enabled = !enabled;
-        if (arg1 && arg1.toLowerCase() === 'on') enabled = true;
-        else if (arg1 && arg1.toLowerCase() === 'off') enabled = false;
-        command.message(enabled ? 'Enabled' : 'Disabled');
-    });
     
     dispatch.hook('S_LOGIN', 10, (event) => {
         gameId = event.gameId;
@@ -38,7 +27,6 @@ module.exports = function NotifyConsumableExpiry(dispatch) {
 	dispatch.hook('S_ABNORMALITY_REFRESH', 1, UpdateConsumables);
     
     function UpdateConsumables(event) {
-        if (!enabled) return;
         if (!event.target.equals(gameId)) return;
         
         let abnormality = activeConsumables.find(p => p.id == event.id);
@@ -54,8 +42,7 @@ module.exports = function NotifyConsumableExpiry(dispatch) {
         }
     }
     
-    dispatch.hook('S_ABNORMALITY_END', 1, (event) => {  
-        if (!enabled) return;
+    dispatch.hook('S_ABNORMALITY_END', 1, (event) => {
         if (!event.target.equals(gameId)) return;
 
         let abnormality = activeConsumables.find(p => p.id == event.id);
