@@ -23,11 +23,11 @@ module.exports = function NotifyConsumableExpiry(dispatch) {
         Abnormalities are removed and re-applied every time the player enters a dungeon, teleports, switch channels.
         To prevent misleading messages from being sent the module keeps track of consumables' remaining duration.
     */
-	dispatch.hook('S_ABNORMALITY_BEGIN', 2, UpdateConsumables);
+	dispatch.hook('S_ABNORMALITY_BEGIN', 3, UpdateConsumables);
 	dispatch.hook('S_ABNORMALITY_REFRESH', 1, UpdateConsumables);
     
     function UpdateConsumables(event) {
-        if (!event.target.equals(gameId)) return;
+        if (event.target != gameId) return;
         
         let abnormality = activeConsumables.find(p => p.id == event.id);
         if (Consumables[event.id]) {
@@ -43,7 +43,7 @@ module.exports = function NotifyConsumableExpiry(dispatch) {
     }
     
     dispatch.hook('S_ABNORMALITY_END', 1, (event) => {
-        if (!event.target.equals(gameId)) return;
+        if (event.target != gameId) return;
 
         let abnormality = activeConsumables.find(p => p.id == event.id);
         if (abnormality && Date.now() > abnormality.startTime + abnormality.duration - 1000) {
@@ -59,12 +59,12 @@ module.exports = function NotifyConsumableExpiry(dispatch) {
             message: msg
 		});
         
-        dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, {
-            type: 31, // 42 Blue Shiny Text, 31 Normal Text
-            chat: false, 
-            channel: 27, 
-            message: msg
-		});         
+        // dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, {
+            // type: 31, // 42 Blue Shiny Text, 31 Normal Text
+            // chat: false, 
+            // channel: 27, 
+            // message: msg
+		// });         
     }
     
 }
