@@ -1,8 +1,11 @@
 {
-	"disableAutoUpdate": false,
-	"options": {
-		"niceName": "Notify-Consumable-Expiry"
-	},
+    "disableAutoUpdate": false,
+    "name": "notify-consumable-expiry",
+    "author": "teralove",
+    "description": "Notifies you when a consumable has expired (Bravery, Noctenium, Canephora).",
+    "options": {
+        "niceName": "Notify Consumable Expiry"
+    },    
     "servers": ["https://raw.githubusercontent.com/teralove/notify-consumable-expiry/master/"],
     "supportUrl": "https://github.com/teralove/notify-consumable-expiry/issues"
 }
