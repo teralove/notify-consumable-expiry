@@ -14,7 +14,7 @@ module.exports = function NotifyConsumableExpiry(dispatch) {
     let gameId = undefined,
         activeConsumables = [];
     
-    dispatch.hook('S_LOGIN', 10, (event) => {
+    dispatch.hook('S_LOGIN', 13, (event) => {
         gameId = event.gameId;
         activeConsumables = [];
     });
@@ -53,7 +53,7 @@ module.exports = function NotifyConsumableExpiry(dispatch) {
     })
     
     function sendMessage(msg) {
-        dispatch.toClient('S_CHAT', 2, {
+        dispatch.toClient('S_CHAT', 3, {
             channel: 7, 
             authorName: "",
             message: msg
