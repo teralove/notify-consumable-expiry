@@ -14,7 +14,7 @@ module.exports = function NotifyConsumableExpiry(dispatch) {
     let gameId = undefined,
         activeConsumables = [];
     
-    dispatch.hook('S_LOGIN', 13, (event) => {
+    dispatch.hook('S_LOGIN', 14, (event) => {
         gameId = event.gameId;
         activeConsumables = [];
     });
